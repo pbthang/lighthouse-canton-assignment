@@ -1,0 +1,10 @@
+{
+  "tasks": {
+    "dev": "deno run --watch --allow-net main.ts"
+  },
+  "imports": {
+    "@std/assert": "jsr:@std/assert@1",
+    "express": "npm:express@^5.1.0",
+    "@types/express": "npm:@types/express@^5.0.1"
+  }
+}
