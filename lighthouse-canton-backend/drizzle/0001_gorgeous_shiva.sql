@@ -1,0 +1,1 @@
+ALTER TABLE "positions" ADD CONSTRAINT "positions_symbol_market_data_symbol_fk" FOREIGN KEY ("symbol") REFERENCES "public"."market_data"("symbol") ON DELETE no action ON UPDATE no action;
