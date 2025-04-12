@@ -1,6 +1,22 @@
 version: "3.8"
 
 services:
+  backend:
+    build:
+      context: ./lighthouse-canton-backend
+      dockerfile: dockerfile
+    container_name: lighthouse_backend
+    env_file:
+      - lighthouse-canton-backend/.env
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@postgres:5432/postgres
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
   postgres:
     image: postgres:latest
     container_name: postgres_db
@@ -10,6 +26,12 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      start_period: 0s
+      interval: 5s
+      timeout: 5s
+      retries: 5
     restart: unless-stopped
 
 volumes:

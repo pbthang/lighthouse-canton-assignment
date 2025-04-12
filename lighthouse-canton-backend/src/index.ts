@@ -1,7 +1,13 @@
-import express, { Request, Response, NextFunction, Express } from "express";
+import express, {
+  type Request,
+  type Response,
+  type NextFunction,
+  type Express,
+} from "express";
 import process from "node:process";
 import "dotenv/config";
 import { createServer } from "http";
+import morgan from "morgan";
 
 // Import routes
 import marketDataRoutes from "./routes/marketData.ts";
@@ -16,6 +22,22 @@ const app: Express = express();
 const httpServer = createServer(app);
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use((req: Request, res: Response, next: NextFunction): void => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  if (req.method === "OPTIONS") {
+    res.sendStatus(200);
+    return;
+  }
+  // Call the next middleware
+  next();
+});
+app.use(morgan("dev")); // Logging middleware
 
 const port = process.env.PORT || 8080;
 
@@ -51,5 +73,5 @@ httpServer.listen(port, () => {
   console.log(`Server is up and running on port ${port}`);
 
   // Initialize the market data cron job
-  initMarketDataCron();
+  // initMarketDataCron();
 });

@@ -1,14 +1,14 @@
 import {
   integer,
-  numeric,
+  doublePrecision,
   pgTable,
   primaryKey,
   timestamp,
   uuid,
   varchar,
+  pgEnum,
 } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
-import type { InferSelectModel } from "drizzle-orm";
 
 export const clientsTable = pgTable("clients", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -31,7 +31,7 @@ export const positionsTable = pgTable(
   {
     symbol: varchar({ length: 255 }).references(() => marketDataTable.symbol),
     quantity: integer().notNull().default(0),
-    costBasis: numeric().notNull().default("0"),
+    costBasis: doublePrecision().notNull().default(0),
     clientId: uuid("client_id").references(() => clientsTable.id),
     createdAt: timestamp().notNull().defaultNow(),
     updatedAt: timestamp()
@@ -54,11 +54,14 @@ export const positionsRelations = relations(positionsTable, ({ one }) => ({
   }),
 }));
 
+export const tendencyEnum = pgEnum("tendency", ["UP", "DOWN", "FLAT"]);
+
 export const marketDataTable = pgTable(
   "market_data",
   {
     symbol: varchar({ length: 255 }),
-    price: numeric().notNull().default("0"),
+    price: doublePrecision().notNull().default(0),
+    change: doublePrecision().notNull().default(0),
     createdAt: timestamp().notNull().defaultNow(),
     updatedAt: timestamp()
       .notNull()
@@ -77,8 +80,8 @@ export const marginTable = pgTable("margin", {
   clientId: uuid("client_id")
     .references(() => clientsTable.id)
     .primaryKey(),
-  loanBalance: numeric().notNull().default("0"),
-  marginRequirement: numeric().notNull().default("0"),
+  loanBalance: doublePrecision().notNull().default(0),
+  marginRequirement: doublePrecision().notNull().default(0),
   createdAt: timestamp().notNull().defaultNow(),
   updatedAt: timestamp()
     .notNull()

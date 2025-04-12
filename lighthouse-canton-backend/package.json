@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "bun run ./src/index.ts",
+    "dev": "bun run --watch ./src/index.ts",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
@@ -13,6 +13,7 @@
   "devDependencies": {
     "@types/bun": "latest",
     "@types/express": "^5.0.1",
+    "@types/morgan": "^1.9.9",
     "@types/node-cron": "^3.0.11",
     "@types/pg": "^8.11.11",
     "drizzle-kit": "^0.30.6",
@@ -26,6 +27,7 @@
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.41.0",
     "express": "^5.1.0",
+    "morgan": "^1.10.0",
     "node-cron": "^3.0.3",
     "pg": "^8.14.1",
     "socket.io": "^4.8.1"

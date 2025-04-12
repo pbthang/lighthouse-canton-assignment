@@ -1,5 +1,5 @@
 {
-  "id": "6d2c3ee2-d6b1-4ade-953f-d915266999db",
+  "id": "30130668-eaff-472b-837f-672bd00bdb16",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -64,17 +64,17 @@
         },
         "loanBalance": {
           "name": "loanBalance",
-          "type": "numeric",
+          "type": "double precision",
           "primaryKey": false,
           "notNull": true,
-          "default": "'0'"
+          "default": 0
         },
         "marginRequirement": {
           "name": "marginRequirement",
-          "type": "numeric",
+          "type": "double precision",
           "primaryKey": false,
           "notNull": true,
-          "default": "'0'"
+          "default": 0
         },
         "createdAt": {
           "name": "createdAt",
@@ -125,10 +125,17 @@
         },
         "price": {
           "name": "price",
-          "type": "numeric",
+          "type": "double precision",
           "primaryKey": false,
           "notNull": true,
-          "default": "'0'"
+          "default": 0
+        },
+        "change": {
+          "name": "change",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
         },
         "createdAt": {
           "name": "createdAt",
@@ -179,10 +186,10 @@
         },
         "costBasis": {
           "name": "costBasis",
-          "type": "numeric",
+          "type": "double precision",
           "primaryKey": false,
           "notNull": true,
-          "default": "'0'"
+          "default": 0
         },
         "client_id": {
           "name": "client_id",
@@ -207,6 +214,19 @@
       },
       "indexes": {},
       "foreignKeys": {
+        "positions_symbol_market_data_symbol_fk": {
+          "name": "positions_symbol_market_data_symbol_fk",
+          "tableFrom": "positions",
+          "tableTo": "market_data",
+          "columnsFrom": [
+            "symbol"
+          ],
+          "columnsTo": [
+            "symbol"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
         "positions_client_id_clients_id_fk": {
           "name": "positions_client_id_clients_id_fk",
           "tableFrom": "positions",
@@ -236,7 +256,17 @@
       "isRLSEnabled": false
     }
   },
-  "enums": {},
+  "enums": {
+    "public.tendency": {
+      "name": "tendency",
+      "schema": "public",
+      "values": [
+        "UP",
+        "DOWN",
+        "FLAT"
+      ]
+    }
+  },
   "schemas": {},
   "sequences": {},
   "roles": {},
