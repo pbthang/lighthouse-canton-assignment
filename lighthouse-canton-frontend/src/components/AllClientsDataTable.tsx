@@ -35,7 +35,7 @@ import { getCurrencyCell, getSortingHeader } from "./common";
 function AllClientsDataTable({ clients = [] }: { clients: Client[] }) {
   return (
     <div className="container mx-auto">
-      <DataTable columns={columns} data={clients} />;
+      <DataTable columns={columns} data={clients} />
     </div>
   );
 }

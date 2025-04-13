@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import ReactApexChart from "react-apexcharts";
 import { ApexOptions } from "apexcharts";
 import { TimeSeriesData } from "@/lib/types";
+import { Card, CardContent } from "./ui/card";
 
 function TimeSeriesCandlestickChart({
   symbol,
@@ -307,17 +308,17 @@ function TimeSeriesCandlestickChart({
   }
 
   return (
-    <div>
-      <div id="chart">
+    <Card className="w-full">
+      <CardContent id="chart" className="h-full">
         <ReactApexChart
           options={chartOptions}
           series={series}
           type="candlestick"
           height={350}
         />
-      </div>
+      </CardContent>
       <div id="html-dist"></div>
-    </div>
+    </Card>
   );
 }
 

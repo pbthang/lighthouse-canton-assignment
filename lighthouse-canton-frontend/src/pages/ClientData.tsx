@@ -46,8 +46,6 @@ const ClientData: React.FC = () => {
     return <div>Error: {error.message}</div>;
   }
 
-  console.log("Client Data:", clientData);
-
   return (
     <div className="container mx-auto p-4">
       <div className="mb-4">

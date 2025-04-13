@@ -1,4 +1,5 @@
 import TimeSeriesCandlestickChart from "@/components/TimeSeriesCandlestickChart";
+import TimeSeriesMetaDataCard from "@/components/TimeSeriesMetaDataCard";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -9,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { AVAILABLE_SYMBOLS } from "@/lib/constants";
+import { AVAILABLE_SYMBOLS, VITE_REACT_APP_API_URL } from "@/lib/constants";
 import { TimeSeriesData } from "@/lib/types";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -51,8 +52,11 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Market Historical Data</h1>
-      <div className="w-fit flex gap-2">
+      <h1 className="text-2xl font-bold mb-2">Market Historical Data</h1>
+      <p className="text-sm text-muted-foreground mb-4">
+        View historical market data for a specific symbol, date, and interval.
+      </p>
+      <div className="w-fit flex gap-2 mt-8">
         <Select
           onValueChange={(value) => setSymbol(value)}
           defaultValue={symbol}
@@ -100,11 +104,12 @@ const Dashboard: React.FC = () => {
         </Select>
       </div>
       {isLoading ? (
-        <div>Loading...</div>
+        <div className="text-muted-foreground">Loading...</div>
       ) : error instanceof Error ? (
-        <div>{error.message}</div>
-      ) : (
+        <div className="text-muted-foreground">{error.message}</div>
+      ) : symbol && date && interval ? (
         <div>
+          <TimeSeriesMetaDataCard data={timeSeriesData.meta} />
           <TimeSeriesCandlestickChart
             timeSeriesData={timeSeriesData}
             symbol={symbol}
@@ -112,13 +117,14 @@ const Dashboard: React.FC = () => {
             interval={interval}
           />
         </div>
+      ) : (
+        <div className="text-muted-foreground">
+          Please select a symbol, date, and interval to view the data.
+        </div>
       )}
     </div>
   );
 };
-
-const VITE_REACT_APP_API_URL =
-  import.meta.env.VITE_REACT_APP_API_URL || "http://localhost:8080/api";
 
 const fetchTimeSeriesData = async ({
   queryKey,

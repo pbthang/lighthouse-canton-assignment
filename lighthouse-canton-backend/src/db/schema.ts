@@ -7,8 +7,21 @@ import {
   uuid,
   varchar,
   pgEnum,
+  text,
 } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
+
+export const userAuthTable = pgTable("user_auth", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  username: varchar({ length: 255 }).notNull().unique(),
+  password: text("password").notNull(),
+  role: varchar({ length: 255 }).notNull(),
+  createdAt: timestamp().notNull().defaultNow(),
+  updatedAt: timestamp()
+    .notNull()
+    .defaultNow()
+    .$onUpdate(() => new Date()),
+});
 
 export const clientsTable = pgTable("clients", {
   id: uuid("id").primaryKey().defaultRandom(),

@@ -19,6 +19,7 @@ import {
 } from "./ui/table";
 import { getCurrencyCell, getSortingHeader } from "./common";
 import { useState } from "react";
+import { VITE_REACT_APP_API_URL } from "@/lib/constants";
 
 function PositionDataTable({ clientId }: { clientId: string | undefined }) {
   const {
@@ -152,8 +153,7 @@ const fetchPositionData = async ({
   if (!clientId) {
     throw new Error("Client ID is required");
   }
-  const VITE_REACT_APP_API_URL =
-    import.meta.env.VITE_REACT_APP_API_URL || "http://localhost:8080/api";
+
   const response = await axios.get(
     `${VITE_REACT_APP_API_URL}/positions/${clientId}`
   );

@@ -1,3 +1,4 @@
+import { UserAuthService } from "../services/userAuthService.ts";
 import { db } from "./index.ts";
 import {
   clientsTable,
@@ -6,6 +7,8 @@ import {
   marketDataTable,
 } from "./schema.ts";
 import process from "node:process";
+
+const userAuthService = new UserAuthService();
 
 async function cleanup() {
   try {
@@ -25,6 +28,9 @@ async function seed() {
   try {
     // Clear existing data first
     await cleanup();
+
+    // Create default user
+    await userAuthService.createUserAuth("admin", "password", "admin");
 
     // Create mock clients
     const clientIds = await Promise.all([

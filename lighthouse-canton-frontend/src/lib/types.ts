@@ -63,3 +63,14 @@ export interface TimeSeriesData {
     volume: string;
   }[];
 }
+
+export interface UserAuth {
+  id: string;
+  username: string;
+  role: string;
+}
+
+export interface UserAuthResponse {
+  token: string;
+  user: UserAuth;
+}

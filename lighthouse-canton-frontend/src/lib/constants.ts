@@ -20,3 +20,10 @@ export const percentageFormatter = new Intl.NumberFormat("en-US", {
 });
 
 export const AVAILABLE_SYMBOLS = ["AAPL", "QQQ", "TRP", "INFY"];
+
+export const VITE_REACT_APP_API_URL =
+  import.meta.env.VITE_REACT_APP_API_URL || "";
+
+if (!VITE_REACT_APP_API_URL) {
+  throw new Error("VITE_REACT_APP_API_URL is not defined");
+}

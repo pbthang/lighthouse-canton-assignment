@@ -17,6 +17,21 @@ services:
         condition: service_healthy
     restart: unless-stopped
 
+  cronjob:
+    build:
+      context: ./lighthouse-canton-backend
+      dockerfile: dockerfile
+    container_name: lighthouse_cronjob
+    env_file:
+      - lighthouse-canton-backend/.env
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@postgres:5432/postgres
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+    command: ["bun", "run", "cron"]
+
   postgres:
     image: postgres:latest
     container_name: postgres_db

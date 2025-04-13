@@ -3,6 +3,7 @@ import { ChartCandlestickIcon, Users } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -11,6 +12,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { NavLink } from "react-router";
+import { SidebarUserBtn } from "./SidebarUserBtn";
 
 // Menu items.
 const items = [
@@ -48,6 +50,9 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+      <SidebarFooter className="flex items-center justify-between p-4">
+        <SidebarUserBtn />
+      </SidebarFooter>
     </Sidebar>
   );
 }

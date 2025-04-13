@@ -58,12 +58,6 @@ export function PortfolioPieChart(props: {
                   formatter={(value, name) => {
                     return (
                       <>
-                        <div
-                          className={cn(
-                            "h-2.5 w-2.5 shrink-0 rounded-[2px]",
-                            `bg-[var(--color-${name})]`
-                          )}
-                        />
                         {chartConfig[name as keyof typeof chartConfig]?.label ||
                           name}
                         <div className="ml-auto flex items-baseline gap-0.5 font-mono font-medium tabular-nums text-foreground">

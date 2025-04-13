@@ -3,9 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { AllClientsResponse } from "@/lib/types";
 import AllClientsDataTable from "@/components/AllClientsDataTable";
-
-const VITE_REACT_APP_API_URL =
-  import.meta.env.VITE_REACT_APP_API_URL || "http://localhost:8080/api";
+import { VITE_REACT_APP_API_URL } from "@/lib/constants";
 
 const fetchClients = async () => {
   const response = await axios.get(`${VITE_REACT_APP_API_URL}/clients`);
@@ -33,9 +31,7 @@ const AllClients: React.FC = () => {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">All Clients</h1>
-      <ul>
-        <AllClientsDataTable clients={clients.data} />
-      </ul>
+      <AllClientsDataTable clients={clients.data} />
     </div>
   );
 };
