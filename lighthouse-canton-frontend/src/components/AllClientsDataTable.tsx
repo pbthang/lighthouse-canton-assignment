@@ -129,7 +129,6 @@ function DataTable<TData, TValue>({
           placeholder="Search by client name..."
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            console.log("Search value: ", event.target.value);
             handleSearch(event.target.value);
           }}
           className="max-w-sm"
