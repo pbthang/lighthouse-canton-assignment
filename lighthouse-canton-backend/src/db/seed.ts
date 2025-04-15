@@ -27,7 +27,7 @@ async function cleanup() {
 async function seed() {
   try {
     // Clear existing data first
-    await cleanup();
+    // await cleanup();
 
     // Create default user
     await userAuthService.createUserAuth("admin", "password", "admin");

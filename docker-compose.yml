@@ -20,7 +20,7 @@ services:
   cronjob:
     build:
       context: ./lighthouse-canton-backend
-      dockerfile: dockerfile
+      dockerfile: dockerfile.cron
     container_name: lighthouse_cronjob
     env_file:
       - lighthouse-canton-backend/.env

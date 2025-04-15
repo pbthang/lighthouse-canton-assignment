@@ -1,0 +1,35 @@
+# Use the official Bun image
+FROM oven/bun:1
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files and install dependencies
+COPY package.json bun.lock ./
+RUN bun install
+
+# Copy application code
+COPY . .
+
+# Create wait-for-db script
+RUN echo '#!/bin/sh\n\
+while ! nc -z postgres 5432; do\n\
+  echo "Waiting for postgres..."\n\
+  sleep 1\n\
+done\n\
+echo "PostgreSQL started"\n\
+\n\
+echo "Starting application..."\n\
+exec "$@"' > /app/wait-for-db.sh && chmod +x /app/wait-for-db.sh
+
+# Install netcat for the wait script
+RUN apt-get update && \
+    apt-get install -y netcat-traditional && \
+    rm -rf /var/lib/apt/lists/*
+
+# Expose the port the app runs on
+EXPOSE 8080
+
+# Use the wait script as entrypoint
+ENTRYPOINT ["/app/wait-for-db.sh"]
+CMD ["bun", "run", "src/cron/index.ts"]
