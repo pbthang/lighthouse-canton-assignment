@@ -103,7 +103,7 @@ function DataTable<TData, TValue>({
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
 
   const handleSearch = throttle((value: string) => {
-    table.getColumn("clientName")?.setFilterValue(value);
+    table.getColumn("name")?.setFilterValue(value);
   }, 200);
 
   const table = useReactTable({
@@ -127,12 +127,11 @@ function DataTable<TData, TValue>({
       <div className="flex gap-4 justify-start py-4">
         <Input
           placeholder="Search by client name..."
-          value={
-            (table.getColumn("clientName")?.getFilterValue() as string) ?? ""
-          }
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-            handleSearch(event.target.value)
-          }
+          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            console.log("Search value: ", event.target.value);
+            handleSearch(event.target.value);
+          }}
           className="max-w-sm"
         />
         <Popover>
